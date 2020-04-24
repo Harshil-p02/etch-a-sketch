@@ -1,8 +1,25 @@
+let grid = document.querySelector('.grid');
 const setSize = document.querySelector('#size');
 const resetSize = document.querySelector('#reset');
 
-let grid = document.querySelector('.grid');
 let cell;
+let colorOption = document.getElementById('colorOption');
+
+colorOption.addEventListener('change', setColor);
+
+function setColor() {
+    let choice = colorOption.value;
+    console.log(choice);
+    if (choice === 'black') {
+        color = getBnWColor();
+    } else if (choice === 'random') {
+        color = getRandomColor();
+    } else {
+        color = getHSLRandomColor();
+    }
+    return color;
+}
+
 for (let i = 0; i < 16*16; i++) {
     cell = document.createElement('div');
     cell.setAttribute('id', 'cell');
@@ -23,7 +40,7 @@ function changeGridSize() {
         grid.appendChild(cell);
     }
     grid.style.cssText = `grid-template-rows: repeat(${n}, 1fr); grid-template-columns: repeat(${n}, 1fr)`;
-    
+    displayColors();
 }
 
 function resetGridSize() {
@@ -35,6 +52,7 @@ function resetGridSize() {
         grid.appendChild(cell);
     }
     grid.style.cssText = 'grid-template-rows: repeat(16, 1fr); grid-template-columns: repeat(16, 1fr)';
+    displayColors();
 }
 
 grid.addEventListener('click', (e) => console.log(e));
@@ -50,13 +68,17 @@ function removeDivFromGrid() {
     }
 }
 
-const selectedDiv = document.querySelectorAll('#cell');
-console.log(selectedDiv);
-selectedDiv.forEach(function(selectedDiv) {
-    selectedDiv.addEventListener('mouseover', function() {
-        selectedDiv.style.backgroundColor = getRandomColor();
+function displayColors() {
+    const selectedDiv = document.querySelectorAll('#cell');
+    console.log(selectedDiv);
+    selectedDiv.forEach(function(selectedDiv) {
+        selectedDiv.addEventListener('mouseover', function() {
+            selectedDiv.style.backgroundColor = setColor();
+        })
     })
-})
+}
+
+
 
 function getRandomColor() {
     let digits = '0123456789ABCDEF';
@@ -69,18 +91,17 @@ function getRandomColor() {
     return color;
 }
 
+function getBnWColor() {
+    return 'black';
+}
 
+function getHSLRandomColor() {
+    let hue = Math.floor(Math.random() * 360);
+    let saturation = 100;
+    let lightness = 80
+    for (let i = 0; i < 6; i++) {
 
-
-/*const grid = document.querySelector('.grid');
-
-for (let i = 0; i < 16; i++) {
-    let row = document.createElement('div');
-    row.setAttribute('class', 'row')
-    for (let j = 0; j < 16; j++) {
-        let cell = document.createElement('div')
-        cell.setAttribute('id', 'cell');
-        row.appendChild(cell);
     }
-    grid.appendChild(row);
-}*/
+}
+
+displayColors();
