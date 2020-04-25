@@ -1,24 +1,36 @@
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <link href="style.css" rel="stylesheet">
         <title>Etch-a-Sketch!</title>
     </head>
+
     <body>
         <div class="title">
             <h1>Etch-a-Sketch</h1>
         </div>
+
         <div class="settings">
-            <label for="colorOption">What color do you want?</label>
+            <label for="colorOption">What color do you want? </label>
             <select id="colorOption">
-                
                 <option value="black">Black and white</option>
                 <option value="random"> Truly random colors</option>
                 <option value="hslRandom">Kinda random colors</option>
             </select>
-            <button id="size">Change grid size</button>
+            <!--Add a dropdown menu for grid size-->
+            
+
+            <label for="gridSize">Change grid size: </label>
+            <select id="gridSize">
+                <option value="16">16 (Default)</option>
+                <option value="32">32</option>
+                <option value="48">48</option>
+                <option value="64">64</option>
+                <option value="custom">Custom value</option>
+            </select>
             <button id="reset">Reset grid</button>
         </div>
+
         <div class="grid">
 
         </div>
