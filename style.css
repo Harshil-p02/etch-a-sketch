@@ -1,19 +1,20 @@
 body {
     margin: 0;
+    background-color: bisque;
 }
 
 .title {
     background-color: purple;
-    color: powderblue;
+    color: rgb(88, 255, 241);
     text-align: center;
     padding: 15px 0;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .title > h1 {
     font-weight: 900;
-    font-size: 1.5em;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2em;
+    font-family: monospace;
     margin: 0;
 }
 
@@ -29,47 +30,37 @@ body {
     height: 800px;
     background-color: white;
     margin: 0 auto;
-    margin-top: 30px;
-    border: 5px solid black;
+    margin-top: 20px;
+    border: 7px solid firebrick;
 }
 
-/*#cell:hover {
-    background-color: black;
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*.grid {
-    width: 960px;
-    height: 960px;
-    margin: 0 auto;
+select#colorOption {
+    margin-right: 10px;
 }
 
-.row {
-    display: flex;
-    width: 960px;
-    height: 55px;
-    margin-bottom: 3px;
+#reset {
+    position: relative;
+    right: -7%;
+    padding: 10px 15px 10px 15px;
+    border-radius: 17px;
+    
+    background-color: blue;
+    color: white;
+    border: rgb(32, 255, 225) solid 3px;
+    cursor: pointer;
+    font-size: 1em;
+    
 }
 
-#cell {
-    height: 50px;
-    width: calc(100vw/16);
-    background-color: red;
-    margin: 2px 5px 2px 2px;
+#reset:hover {
+    transform: scale(1.1);
+    animation-name: changeColor;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
 }
 
-#cell:hover {
-    background-color: royalblue;
-}*/
+@keyframes changeColor {
+    100% {
+        background-color: red;
+    }
+}
