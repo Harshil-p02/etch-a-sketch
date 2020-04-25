@@ -1,5 +1,4 @@
-// Add a dropdown menu for grid size for some default sizes
-// Add a customize size option also
+// declaring variables
 
 const grid = document.querySelector('.grid');
 let cell;
@@ -8,34 +7,17 @@ const resetSize = document.querySelector('#reset');
 const colorOption = document.getElementById('colorOption');
 let colorArray = [];
 
+// adding event listeners
 
 gridSize.addEventListener('change', changeGridSize);
 resetSize.addEventListener('click', resetGridSize);
 colorOption.addEventListener('change', setColor);
 
-
-function setColor() {
-    let choice = colorOption.value;
-    console.log(choice);
-    if (choice === 'black') {
-        color = 'black';
-    } else if (choice === 'random') {
-        color = getRandomColor();
-    } else {
-        //hsl color
-        if (colorArray.length == 0) {
-            colorArray = getHSLRandomColor();
-        }
-        color = colorArray[0];
-        colorArray.shift();        
-    }
-    return color;
-}
+// displaying default grid on loading
 
 for (let i = 0; i < 16*16; i++) {
     cell = document.createElement('div');
     cell.setAttribute('id', 'cell');
-    
     grid.appendChild(cell);
 }
 
@@ -62,11 +44,10 @@ function changeGridSize() {
                 if (typeof Number(n) === 'number' && n > 0) {
                     break;
                 }
-            }
-            
-            
+            }     
     }
-    //n = prompt('What size grid do you want?');
+    // removing previous cells present in grid
+
     removeDivFromGrid();
     
     for (let i = 0; i < n*n; i++) {
@@ -74,9 +55,11 @@ function changeGridSize() {
         cell.setAttribute('id', 'cell');
         grid.appendChild(cell);
     }
+
     grid.style.cssText = `grid-template-rows: repeat(${n}, 1fr); grid-template-columns: repeat(${n}, 1fr)`;
     displayColors();
 }
+
 
 function resetGridSize() {
     removeDivFromGrid();
@@ -91,7 +74,7 @@ function resetGridSize() {
     displayColors();
 }
 
-//grid.addEventListener('click', (e) => console.log(e));
+// function to clear the grid
 
 function removeDivFromGrid() {
     while (true) {
@@ -103,6 +86,26 @@ function removeDivFromGrid() {
         }
     }
 }
+
+
+function setColor() {
+    let choice = colorOption.value;
+    console.log(choice);
+    if (choice === 'black') {
+        color = 'black';
+    } else if (choice === 'random') {
+        color = getRandomColor();
+    } else {
+        if (colorArray.length == 0) {
+            colorArray = getHSLRandomColor();
+        }
+        color = colorArray[0];
+        colorArray.shift();        
+    }
+    return color;
+}
+
+
 
 function displayColors() {
     const selectedDiv = document.querySelectorAll('#cell');
@@ -127,9 +130,6 @@ function getRandomColor() {
     return color;
 }
 
-/*function getBnWColor() {
-    return 'black';
-}*/
 
 function getHSLRandomColor() {
     // hsl color is remaining
