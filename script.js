@@ -1,21 +1,33 @@
-let grid = document.querySelector('.grid');
-const setSize = document.querySelector('#size');
-const resetSize = document.querySelector('#reset');
+// Add a dropdown menu for grid size for some default sizes
+// Add a customize size option also
 
+const grid = document.querySelector('.grid');
 let cell;
-let colorOption = document.getElementById('colorOption');
+const gridSize = document.getElementById('gridSize');
+const resetSize = document.querySelector('#reset');
+const colorOption = document.getElementById('colorOption');
+let colorArray = [];
 
+
+gridSize.addEventListener('change', changeGridSize);
+resetSize.addEventListener('click', resetGridSize);
 colorOption.addEventListener('change', setColor);
+
 
 function setColor() {
     let choice = colorOption.value;
     console.log(choice);
     if (choice === 'black') {
-        color = getBnWColor();
+        color = 'black';
     } else if (choice === 'random') {
         color = getRandomColor();
     } else {
-        color = getHSLRandomColor();
+        //hsl color
+        if (colorArray.length == 0) {
+            colorArray = getHSLRandomColor();
+        }
+        color = colorArray[0];
+        colorArray.shift();        
     }
     return color;
 }
@@ -27,11 +39,34 @@ for (let i = 0; i < 16*16; i++) {
     grid.appendChild(cell);
 }
 
-setSize.addEventListener('click', changeGridSize);
-resetSize.addEventListener('click', resetGridSize);
 
 function changeGridSize() {
-    n = prompt('What size grid do you want?');
+    let n;
+    let choice = gridSize.value;
+    switch (choice) {
+        case '16':
+            n = 16;
+            break;
+        case '32':
+            n = 32;
+            break;
+        case '48':
+            n = 48;
+            break;
+        case '64':
+            n = 64;
+            break;
+        case 'custom':
+            while (true) {
+                n = prompt('What size grid do you want?');
+                if (typeof Number(n) === 'number' && n > 0) {
+                    break;
+                }
+            }
+            
+            
+    }
+    //n = prompt('What size grid do you want?');
     removeDivFromGrid();
     
     for (let i = 0; i < n*n; i++) {
@@ -46,6 +81,7 @@ function changeGridSize() {
 function resetGridSize() {
     removeDivFromGrid();
 
+    gridSize.value = '16';
     for (let i = 0; i < 16*16; i++) {
         cell = document.createElement('div');
         cell.setAttribute('id', 'cell');
@@ -55,7 +91,7 @@ function resetGridSize() {
     displayColors();
 }
 
-grid.addEventListener('click', (e) => console.log(e));
+//grid.addEventListener('click', (e) => console.log(e));
 
 function removeDivFromGrid() {
     while (true) {
@@ -91,17 +127,22 @@ function getRandomColor() {
     return color;
 }
 
-function getBnWColor() {
+/*function getBnWColor() {
     return 'black';
-}
+}*/
 
 function getHSLRandomColor() {
+    // hsl color is remaining
+    let hslArray = [];
     let hue = Math.floor(Math.random() * 360);
-    let saturation = 100;
-    let lightness = 80
+    
+    let lightness = 80;
+    hslArray.push(`hsl(${hue}, 100%, 80%)`);
     for (let i = 0; i < 6; i++) {
-
+        lightness -= 10;
+        hslArray.push(`hsl(${hue}, 100%, ${lightness}%)`);
     }
+    return hslArray;
 }
 
 displayColors();
